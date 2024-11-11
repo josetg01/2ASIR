@@ -10,7 +10,7 @@ Description=Servicio de supervisión del sistema
 After=network.target
 
 [Service]
-ExecStart=$SCRIPT_MONITOR
+ExecStart=/bin/bash $SCRIPT_MONITOR
 Restart=always
 User=root
 
