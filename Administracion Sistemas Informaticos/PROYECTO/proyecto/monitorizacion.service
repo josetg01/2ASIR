@@ -1,0 +1,11 @@
+[Unit]
+Description=Servicio de supervisión del sistema
+After=network.target
+
+[Service]
+ExecStart=/ruta/a/tu/script.sh
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
