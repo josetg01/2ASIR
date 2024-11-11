@@ -4,7 +4,7 @@ SCRIPT_MONITOR="/etc/monitoreo.sh"
 sudo wget https://raw.githubusercontent.com/josetg01/2ASIR/refs/heads/main/Administracion%20Sistemas%20Operativos/PROYECTO/parte2/monitoreo.sh -O $SCRIPT_MONITOR
 
 #Establecimiento del servicio de monitoreo
-cat > /etc/systemd/system/monitorizacion.service <<EOL
+sudo cat > /etc/systemd/system/monitorizacion.service <<EOL
 [Unit]
 Description=Servicio de supervisión del sistema
 After=network.target
