@@ -1,4 +1,4 @@
-#DNS BIND9 EN DOCKER
+# DNS BIND9 EN DOCKER
 ## Construir imagen
 ```
 sudo docker build -t dns .
