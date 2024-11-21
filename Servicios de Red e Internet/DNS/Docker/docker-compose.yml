@@ -1,0 +1,9 @@
+services:
+    dns:
+        container_name: dns
+        volumes:
+            - /etc/bind:/etc/bind
+            - /var/lib/bind:/var/lib/bind
+        network_mode: host
+        restart: unless-stopped
+        image: dns
