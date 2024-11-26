@@ -1,0 +1,8 @@
+services:
+    dhcp:
+        container_name: dhcp
+        volumes:
+            - /etc/kea:/etc/kea
+        network_mode: host
+        restart: unless-stopped
+        image: dhcp
