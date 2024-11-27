@@ -14,6 +14,9 @@ else
     echo "El script de monitoreo ya existe en $SCRIPT_MONITOR. No es necesario descargarlo."
 fi
 
+#Programar una tarea puntual (por ejemplo, verificar si un servicio está corriendo) con at:
+echo "systemctl is-active --quiet apache2 || systemctl restart apache2" | at 03:00
+
 # Crear el servicio systemd para el monitoreo
 echo "Creando el servicio systemd para la supervisión..."
 sudo tee /etc/systemd/system/monitorizacion.service > /dev/null <<EOL
@@ -24,8 +27,6 @@ After=network.target
 [Service]
 ExecStart=/bin/bash $SCRIPT_MONITOR
 Restart=always
-User=root
-WorkingDirectory=/etc
 
 [Install]
 WantedBy=multi-user.target
