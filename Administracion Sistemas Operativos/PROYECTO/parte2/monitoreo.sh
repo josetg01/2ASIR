@@ -22,6 +22,7 @@ df -h | grep -E '^/dev' | while read line; do
     if [[ $used_percent -gt 90 ]]; then
         echo "ALERTA: La partición $partition tiene menos de 10% de espacio libre." | logger -t monitorizacion >> $LOGFILE
     fi
+done
 
 # Supervisar los logs del sistema para errores
 logger -t monitorizacion "[$(date)] Revisión de errores en syslog:" >> $LOGFILE
