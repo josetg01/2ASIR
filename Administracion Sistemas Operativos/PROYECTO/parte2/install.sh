@@ -17,6 +17,11 @@ fi
 #Programar una tarea puntual (por ejemplo, verificar si un servicio está corriendo) con at:
 echo "systemctl is-active --quiet apache2 || systemctl restart apache2" | at 03:00
 
+# Programar ejecucion automatica con crontab
+sudo tee /etc/crontab >> /dev/null <<EOL
+*/5 * * * *    bash $SCRIPT_MONITOR
+EOL
+
 # Crear el servicio systemd para el monitoreo
 echo "Creando el servicio systemd para la supervisión..."
 sudo tee /etc/systemd/system/monitorizacion.service > /dev/null <<EOL
