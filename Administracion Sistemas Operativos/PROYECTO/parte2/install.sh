@@ -6,8 +6,6 @@ read -p "Introduce tu correo electronico de gmail para los logs: " email
 read -s -p "Introduce tu contraseña del mail: " password_email
 sudo apt update
 sudo apt install logcheck msmtp msmtp-mta at -y
-echo $password_email > /tmp/gmail_password.txt
-gpg --output /etc/gmail_password.gpg --encrypt --armor --recipient $email /tmp/gmail_password.txt
 
 # Verificar si el archivo de script ya existe, si no, descargarlo
 if [ ! -f "$SCRIPT_MONITOR" ]; then
@@ -59,7 +57,7 @@ host smtp.gmail.com
 port 587
 from $email
 user $email
-password $(gpg --quiet --decrypt /etc/gmail_password.gpg)
+password $password_email
 tls on
 tls_starttls on
 auth on
