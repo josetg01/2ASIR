@@ -2,6 +2,8 @@
 
 # Definir la ruta del archivo de log
 LOGFILE="/var/log/monitorizacion.log"
+DATE=$(TZ='Europe/Madrid' date +"%d-%m-%Y_%H:%M:%S")
+LOGFILE_FILE="$LOGFILE_$DATE
 
 # Iniciar la supervisión y registrar el inicio del proceso
 logger -t monitorizacion "[$(date)] Iniciando supervisión" >> $LOGFILE
