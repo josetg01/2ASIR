@@ -17,7 +17,13 @@ ps aux --sort=-%mem | head -n 6 | logger -t monitorizacion >> $LOGFILE
 
 # Supervisar el espacio en disco
 logger -t monitorizacion "[$(date)] Revisión de espacio en disco:" >> $LOGFILE
-df -h | awk '{if($5+0 > 90) print "Advertencia: " $1 " está al " $5 " de su capacidad."}' | logger -t monitorizacion >> $LOGFILE
+df -h | grep -E '^/dev' | while read line; do
+    used=$(echo $line | awk '{print $5}')
+    used_percent=$(echo $used | sed 's/%//')
+    # if [[ "${available%?}" -lt 10 ]]; then
+    if [[ $used_percent -gt 90 ]]; then
+        echo "ALERTA: La partición $partition tiene menos de 10% de espacio libre." | logger -t monitorizacion >> $LOGFILE
+    fi
 
 # Supervisar los logs del sistema para errores
 logger -t monitorizacion "[$(date)] Revisión de errores en syslog:" >> $LOGFILE
