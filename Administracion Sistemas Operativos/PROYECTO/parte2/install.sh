@@ -2,11 +2,12 @@
 
 # Definir la ubicación del script de monitoreo
 SCRIPT_MONITOR="/etc/monitoreo.sh"
-read -p "Introduce tu correo electronico para los logs: " email
+read -p "Introduce tu correo electronico de gmail para los logs: " email
 read -s -p "Introduce tu contraseña del mail: " password_email
 sudo apt update
 sudo apt install logcheck msmtp msmtp-mta
-echo $password_email > /tmp/gmail_password.txt
+echo $password_email > /etc/gmail_password.txt
+gpg --encrypt --armor --recipient $email /etc/gmail_password.txt
 
 # Verificar si el archivo de script ya existe, si no, descargarlo
 if [ ! -f "$SCRIPT_MONITOR" ]; then
