@@ -1,29 +1,30 @@
 #!/bin/bash
 
-# Definir el archivo de log
-LOG_FILE="/var/log/monitorizacion.log"
+#!/bin/bash
 
-# Obtener los 5 procesos que más consumen CPU y memoria
-echo "----- Procesos que más consumen recursos -----" >> $LOG_FILE
-ps aux --sort=-%cpu | head -n 6 >> $LOG_FILE
-ps aux --sort=-%mem | head -n 6 >> $LOG_FILE
+# Definir la ruta del archivo de log
+LOGFILE="/var/log/monitorizacion.log"
 
-# Comprobar el espacio en disco
-echo "----- Espacio en Disco -----" >> $LOG_FILE
-df -h | grep -E '^/dev' | while read line; do
-    used=$(echo $line | awk '{print $5}')
-    used_percent=$(echo $used | sed 's/%//')
-    if [[ $used_percent -gt 90 ]]; then
-        echo "ALERTA: La partición $partition tiene menos de 10% de espacio libre." >> $LOG_FILE
-    fi
-done
+# Iniciar la supervisión y registrar el inicio del proceso
+logger -t monitorizacion "[$(date)] Iniciando supervisión" >> $LOGFILE
 
-# Revisión de los logs del sistema para errores
-echo "----- Revisión de logs -----" >> $LOG_FILE
-echo "Errores en syslog:" >> $LOG_FILE
-grep -i "error" /var/log/syslog | tail -n 10 >> $LOG_FILE
-echo "Errores en dmesg:" >> $LOG_FILE
-dmesg | grep -i "error" | tail -n 10 >> $LOG_FILE
+# Supervisar el uso de la CPU y memoria, y registrar los procesos más consumidores
+logger -t monitorizacion "[$(date)] Top 5 procesos que más CPU están utilizando:" >> $LOGFILE
+ps aux --sort=-%cpu | head -n 6 | logger -t monitorizacion >> $LOGFILE
 
-# Guardar en el log de monitorización
-logger -t monitorizacion "Script de supervisión ejecutado a $(date)" 
+logger -t monitorizacion "[$(date)] Top 5 procesos que más memoria están utilizando:" >> $LOGFILE
+ps aux --sort=-%mem | head -n 6 | logger -t monitorizacion >> $LOGFILE
+
+# Supervisar el espacio en disco
+logger -t monitorizacion "[$(date)] Revisión de espacio en disco:" >> $LOGFILE
+df -h | awk '{if($5+0 > 90) print "Advertencia: " $1 " está al " $5 " de su capacidad."}' | logger -t monitorizacion >> $LOGFILE
+
+# Supervisar los logs del sistema para errores
+logger -t monitorizacion "[$(date)] Revisión de errores en syslog:" >> $LOGFILE
+grep -i 'error' /var/log/syslog | tail -n 10 | logger -t monitorizacion >> $LOGFILE
+
+logger -t monitorizacion "[$(date)] Revisión de errores en dmesg:" >> $LOGFILE
+dmesg | grep -i 'error' | tail -n 10 | logger -t monitorizacion >> $LOGFILE
+
+# Finalizar supervisión y registrar el final
+logger -t monitorizacion "[$(date)] Supervisión completada" >> $LOGFILE
