@@ -28,3 +28,5 @@ dmesg | grep -i 'error' | tail -n 10 | logger -t monitorizacion >> $LOGFILE
 
 # Finalizar supervisión y registrar el final
 logger -t monitorizacion "[$(date)] Supervisión completada" >> $LOGFILE
+
+sudo -u logcheck logcheck
