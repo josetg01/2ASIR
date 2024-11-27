@@ -59,7 +59,7 @@ host smtp.gmail.com
 port 587
 from $email
 user $email
-password $password_email 
+password $(gpg --quiet --decrypt /etc/gmail_password.txt)
 tls on
 tls_starttls on
 auth on
