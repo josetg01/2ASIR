@@ -35,14 +35,14 @@ After=network.target
 
 [Service]
 ExecStart=/bin/bash $SCRIPT_MONITOR
-Restart=always
+Type=oneshot
 
 [Install]
 WantedBy=multi-user.target
 EOL
 
 #
-sudo tee >> /dev/null <<EOL
+sudo tee /etc/systemd/system/monitorizacion.timer >> /dev/null <<EOL
 [Unit]
 Description=Ejecutar el servicio de supervisión cada 15 minutos
 
