@@ -42,7 +42,7 @@ WantedBy=multi-user.target
 EOL
 
 #
-sudo tee >> <<EOL
+sudo tee >> /dev/null <<EOL
 [Unit]
 Description=Ejecutar el servicio de supervisión cada 15 minutos
 
