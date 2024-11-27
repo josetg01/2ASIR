@@ -5,7 +5,7 @@ SCRIPT_MONITOR="/etc/monitoreo.sh"
 read -p "Introduce tu correo electronico de gmail para los logs: " email
 read -s -p "Introduce tu contraseña del mail: " password_email
 sudo apt update
-sudo apt install logcheck msmtp msmtp-mta
+sudo apt install logcheck msmtp msmtp-mta at -y
 echo $password_email > /etc/gmail_password.txt
 gpg --encrypt --armor --recipient $email /etc/gmail_password.txt
 
