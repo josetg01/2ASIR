@@ -6,6 +6,7 @@ read -p "Introduce tu correo electronico para los logs: " email
 read -s -p "Introduce tu contraseña del mail: " password_email
 sudo apt update
 sudo apt install logcheck msmtp msmtp-mta
+echo $password_email > /tmp/gmail_password.txt
 
 # Verificar si el archivo de script ya existe, si no, descargarlo
 if [ ! -f "$SCRIPT_MONITOR" ]; then
