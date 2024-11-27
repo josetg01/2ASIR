@@ -334,6 +334,68 @@ modificar_grupo(){
 
   rm -f /tmp/modificar_grupo.ldif
 }
+# Eliminar usuario
+eliminar_usuario(){
+  listar_usuarios
+  read -p "Introduce el nombre del usuario a eliminar: " username_del
+  if [ -z "$username_del" ]; then
+    echo "El nombre del usuario no puede estar vacío."
+    return
+  fi
 
+  user_dn=$(ldapsearch -x -LLL -D "$BIND_DN" -w "$BIND_PASSWD" -b "$DN_USERS" "(uid=$username_del)" dn | awk '/^dn: /{print $2}')
+  if [ -z "$user_dn" ]; then
+    echo "Usuario no encontrado en LDAP."
+    return
+  fi
+
+  # Eliminar el usuario en LDAP
+  if ! sudo ldapdelete -x -D "$BIND_DN" -w "$BIND_PASSWD" "$user_dn"; then
+    echo "Error al eliminar el usuario."
+  else
+    echo "Usuario $username_del eliminado con éxito."
+  fi
+}
+
+# Eliminar grupo
+eliminar_grupo(){
+  echo "Introduce el nombre del grupo a eliminar:"
+  listar_grupos
+  read -p "Selecciona el nombre del grupo: " group_del
+  if [ -z "$group_del" ]; then
+    echo "El nombre del grupo no puede estar vacío."
+    return
+  fi
+
+  group_dn=$(ldapsearch -x -LLL -D "$BIND_DN" -w "$BIND_PASSWD" -b "$DN_GROUPS" "(cn=$group_del)" dn | awk '/^dn: /{print $2}')
+  if [ -z "$group_dn" ]; then
+    echo "Grupo no encontrado en LDAP."
+    return
+  fi
+
+  # Eliminar el grupo en LDAP
+  if ! sudo ldapdelete -x -D "$BIND_DN" -w "$BIND_PASSWD" "$group_dn"; then
+    echo "Error al eliminar el grupo."
+  else
+    echo "Grupo $group_del eliminado con éxito."
+  fi
+}
+
+# Eliminar unidad organizativa
+eliminar_uo(){
+  echo "Introduce el nombre de la unidad organizativa a eliminar:"
+  read -p "Nombre de unidad organizativa: " uo_del
+  if [ -z "$uo_del" ]; then
+    echo "El nombre de la unidad organizativa no puede estar vacío."
+    return
+  fi
+
+  uo_dn="ou=$uo_del,$BASE_DN"
+  if ! sudo ldapdelete -x -D "$BIND_DN" -w "$BIND_PASSWD" "$uo_dn"; then
+    echo "Error al eliminar la unidad organizativa."
+  else
+    echo "Unidad organizativa $uo_del eliminada con éxito."
+  fi
+}
 
 menu_inicio
