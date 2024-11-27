@@ -41,6 +41,19 @@ Restart=always
 WantedBy=multi-user.target
 EOL
 
+#
+sudo tee >> <<EOL
+[Unit]
+Description=Ejecutar el servicio de supervisión cada 15 minutos
+
+[Timer]
+OnUnitActiveSec=15m
+Unit=monitorizacion.service
+
+[Install]
+WantedBy=timers.target
+EOL
+
 # Recargar los servicios de systemd, habilitar e iniciar el servicio
 echo "Habilitando e iniciando el servicio de monitoreo..."
 sudo systemctl daemon-reload
