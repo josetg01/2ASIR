@@ -2,6 +2,10 @@
 
 # Definir la ubicación del script de monitoreo
 SCRIPT_MONITOR="/etc/monitoreo.sh"
+read -p "Introduce tu correo electronico para los logs: " email
+read -s -p "Introduce tu contraseña del mail: " password_email
+sudo apt update
+sudo apt install logcheck msmtp msmtp-mta
 
 # Verificar si el archivo de script ya existe, si no, descargarlo
 if [ ! -f "$SCRIPT_MONITOR" ]; then
@@ -44,3 +48,18 @@ sudo systemctl enable monitorizacion
 sudo systemctl start monitorizacion
 
 echo "El servicio de monitoreo está ahora activo y en ejecución."
+
+#Configurar logcheck con sendmail y smtp de google
+sudo tee /etc/msmtprc >> /dev/null <<EOL
+# Configuración de msmtp para Gmail
+account default
+host smtp.gmail.com
+port 587
+from $email
+user $email
+password $password_email 
+tls on
+tls_starttls on
+auth on
+logfile /var/log/msmtp.log
+EOL
