@@ -41,7 +41,7 @@ Type=oneshot
 WantedBy=multi-user.target
 EOL
 
-#
+# Archivo de timer para ejecutar el servicio de monitorizacion cada 15 minutos.
 sudo tee /etc/systemd/system/monitorizacion.timer >> /dev/null <<EOL
 [Unit]
 Description=Ejecutar el servicio de supervisión cada 15 minutos
