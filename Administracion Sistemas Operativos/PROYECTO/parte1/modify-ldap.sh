@@ -334,6 +334,22 @@ modificar_grupo(){
 
   rm -f /tmp/modificar_grupo.ldif
 }
+
+# Función para eliminar objeto
+eliminar_objeto(){
+  echo "1) Eliminar Usuario"
+  echo "2) Eliminar Grupo"
+  echo "3) Eliminar Unidad Organizativa"
+  read -p "Seleccione una opción [1-3]: " n
+
+  case $n in
+    1) eliminar_usuario;;
+    2) eliminar_grupo;;
+    3) eliminar_uo;;
+    *) echo "Opción incorrecta"; eliminar_objeto;;
+  esac
+}
+
 # Eliminar usuario
 eliminar_usuario(){
   listar_usuarios
