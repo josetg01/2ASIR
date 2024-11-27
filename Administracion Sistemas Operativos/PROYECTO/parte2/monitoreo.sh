@@ -20,7 +20,6 @@ logger -t monitorizacion "[$(date)] Revisión de espacio en disco:" >> $LOGFILE
 df -h | grep -E '^/dev' | while read line; do
     used=$(echo $line | awk '{print $5}')
     used_percent=$(echo $used | sed 's/%//')
-    # if [[ "${available%?}" -lt 10 ]]; then
     if [[ $used_percent -gt 90 ]]; then
         echo "ALERTA: La partición $partition tiene menos de 10% de espacio libre." | logger -t monitorizacion >> $LOGFILE
     fi
