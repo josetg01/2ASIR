@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 # Definir la ruta del archivo de log
 LOGFILE="/var/log/monitorizacion.log"
 
