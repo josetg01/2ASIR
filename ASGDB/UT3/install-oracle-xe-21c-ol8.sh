@@ -14,3 +14,8 @@ dnf -y localinstall oracle-database-preinstall-21c-1.0-1.el8.x86_64.rpm
 
 # Configuracion del listener
 (echo $pass_oracle; echo $pass_oracle;) | /etc/init.d/oracle-xe-21c configure >> /xe_logs/XEsilentinstall.log 2>&1
+
+# Activacion del servicio
+systemctl daemon-reload
+systemctl enable oracle-xe-21c
+systemctl start oracle-xe-21c
