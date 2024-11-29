@@ -5,8 +5,7 @@ read -p "Introduce la contraseña a usar en el listener de oracle-xe 21c: " pass
 dnf -y update
 
 # Instalacion y preparacion de Oracle Linux para instalar Oracle Xe 21c 
-curl -o oracle-database-preinstall-21c-1.0-1.el8.x86_64.rpm https://yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/getPackage/oracle-database-preinstall-21c-1.0-1.el8.x86_64.rpm
-dnf -y localinstall oracle-database-preinstall-21c-1.0-1.el8.x86_64.rpm
+dnf -y install oracle-database-preinstall-21c
 
 # Instalacion de Oracle Xe 21c
 curl -o oracle-database-xe-21c-1.0-1.ol8.x86_64.rpm https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-21c-1.0-1.ol8.x86_64.rpm
