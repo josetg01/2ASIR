@@ -5,4 +5,5 @@ RUN apt update && \
       apache2 \
       libapache2-mod-php \
       php \
-      php-mysql
+      php-mysql && \
+      apt clean
