@@ -1,0 +1,8 @@
+services:
+    apache-php:
+        container_name: apache-php
+        volumes:
+            - /var/www/html:/var/www/html
+        network_mode: host
+        restart: unless-stopped
+        image: apache-php
