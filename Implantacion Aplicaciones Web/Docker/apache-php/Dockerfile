@@ -7,4 +7,7 @@ RUN apt update && \
       php \
       php-mysql && \
       apt clean
+
+EXPOSE 80 443
+
 CMD ["/etc/init.d/apache2", "start"]
