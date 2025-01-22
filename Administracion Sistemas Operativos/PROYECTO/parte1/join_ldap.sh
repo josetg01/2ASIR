@@ -3,6 +3,7 @@
 #Configuracion de variables
 read -p "Introduce el dominio: " dominio
 read -p "Introduce el usuario root de LDAP: " BIND_DN_ROOT
+read -sp "Contraseña del usuario root de LDAP: " BIND_DN_PASSWD
 read -p "IP del servidor ldap: " IP_LDAP
 
 LDAP_CONF="/etc/ldap/ldap.conf"
@@ -47,5 +48,15 @@ sed -i '/^shadow:/s/$/ ldap/' $NSS_CONF
 
 #Añadimos la linea necesaria al fichero common-session
 echo "session    optional    pam_mkhomedir.so    skel=/etc/skel   umask=077" >> /etc/pam.d/common-session
+
+# Instalacion de NSLCD
+cat <<EOL > /etc/nslcd.conf
+uri ldap://ldap.$dominio
+base $ldap_format
+binddn cn=$BIND_DN_ROOT,$ldap_format
+bindpw $BIND_DN_PASSWD
+nss_initgroups_ignoreusers root,ldap,nslcd
+EOL
+
 
 echo "A continuacion debes reiniciar el equipo."
