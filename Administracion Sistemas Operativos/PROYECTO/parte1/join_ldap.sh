@@ -15,7 +15,7 @@ $IP_LDAP    ldap.$dominio
 EOL
 
 #Instalacion paquetes cliente ldap
-sudo DEBIAN_FRONTEND=noninteractive  apt install libnss-ldap libpam-ldap ldap-utils -y
+sudo DEBIAN_FRONTEND=noninteractive  apt install libnss-ldap libpam-ldap ldap-utils nslcd -y
 
 # Divide el dominio en partes utilizando el punto como delimitador
 IFS='.' read -r -a partes <<< "$dominio"
