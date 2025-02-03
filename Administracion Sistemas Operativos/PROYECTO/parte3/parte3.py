@@ -1,6 +1,10 @@
 import paramiko
+import platform
 
-def linux_ssh():
+so = platform.system()
+
+
+def conectar_ssh():
   # Crear una instancia de un cliente SSH
   client = paramiko.SSHClient()
 
@@ -43,6 +47,17 @@ def linux_ssh():
     # Cerrar la conexión
     client.close()
 
+def windows_remote():
+
+def conexion_remota():
+  if so = "Windows":
+    windows_remote()
+  elif = "Linux":
 def menu():
   print(1. Conectar a equipo remoto)
   print(2. Gestion de impresion)
+  print(3. Salir)
+  opcion = input("Introduce una opcion [1-3]:")
+  if opcion = "1":
+    
+  elif
