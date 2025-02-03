@@ -3,7 +3,7 @@ import platform
 
 so = platform.system()
 
-
+# Funciones de conexion remota
 def conectar_ssh():
   # Crear una instancia de un cliente SSH
   client = paramiko.SSHClient()
@@ -54,6 +54,8 @@ def conexion_remota():
     windows_remote()
   elif = "Linux":
     conectar_ssh()
+
+# 
 
 def menu():
   print(1. Conectar a equipo remoto)
