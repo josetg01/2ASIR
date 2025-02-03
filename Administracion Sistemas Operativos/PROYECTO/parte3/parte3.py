@@ -53,6 +53,8 @@ def conexion_remota():
   if so = "Windows":
     windows_remote()
   elif = "Linux":
+    conectar_ssh()
+
 def menu():
   print(1. Conectar a equipo remoto)
   print(2. Gestion de impresion)
