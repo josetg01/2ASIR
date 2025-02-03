@@ -42,3 +42,7 @@ def linux_ssh():
   finally:
     # Cerrar la conexión
     client.close()
+
+def menu():
+  print(1. Conectar a equipo remoto)
+  print()
