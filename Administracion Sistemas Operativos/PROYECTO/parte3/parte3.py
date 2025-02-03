@@ -45,4 +45,4 @@ def linux_ssh():
 
 def menu():
   print(1. Conectar a equipo remoto)
-  print()
+  print(2. Gestion de impresion)
