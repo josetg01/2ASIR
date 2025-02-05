@@ -160,11 +160,11 @@ def cancelar_trabajo_impresion():
     elif so == "Linux" or so == "Darwin":
         job_id = input("Introduce el ID del trabajo de impresión a cancelar: ")
         try:
-            subprocess.run(['cancel', job_id])
+            conn = cups.Connection()
+            conn.cancelJob(job_id)
             print(f"Trabajo de impresión {job_id} cancelado.")
         except Exception as e:
             print(f"Error al cancelar el trabajo de impresión: {e}")
-
 # Menú principal
 def menu():
     while True:
