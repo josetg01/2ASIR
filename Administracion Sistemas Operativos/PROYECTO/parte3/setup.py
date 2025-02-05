@@ -8,7 +8,6 @@ if so == "Linux":
     required_libraries = ['paramiko', 'cups']
 elif so == "Windows":
     required_libraries = ['win32print', 'win32ui']
-    import win32print
 # Función para comprobar si la librería está instalada
 def check_and_install(library):
     try:
