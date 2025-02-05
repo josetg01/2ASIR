@@ -48,8 +48,6 @@ def conectar_ssh(hostname, port, username, password):
     # Cerrar la conexión
     client.close()
 
-def windows_remote():
-
 def conexion_remota():
   if so = "Windows":
     windows_remote()
