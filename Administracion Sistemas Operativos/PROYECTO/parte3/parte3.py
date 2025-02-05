@@ -5,11 +5,11 @@ import subprocess
 so = platform.system()
 
 if so == "Windows":
-    import paramiko
-    import cups
-elif so == "Linux" or so == "Darwin":
     import win32print
     import win32ui
+elif so == "Linux" or so == "Darwin":
+    import paramiko
+    import cups
 
 # Funciones de conexion remota
 def conectar_ssh():
