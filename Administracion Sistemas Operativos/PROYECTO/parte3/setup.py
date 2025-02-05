@@ -6,9 +6,9 @@ so = platform.system()
 
 # Lista de librerías que quieres comprobar e instalar
 if so == "Linux":
-    required_libraries = ['paramiko', 'cups']
+    required_libraries = ['paramiko', 'pycups']
 elif so == "Windows":
-    required_libraries = ['win32print', 'win32ui']
+    required_libraries = ['pywin32']
 # Función para comprobar si la librería está instalada
 def check_and_install(library):
     try:
