@@ -7,7 +7,7 @@ so = platform.system()
 if so == "Windows":
     import paramiko
     import cups
-elif so == "Linux":
+elif so == "Linux" or so == "Darwin":
     import win32print
     import win32ui
 
