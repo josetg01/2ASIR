@@ -1,12 +1,15 @@
 import platform
 import getpass
 import subprocess
-import paramiko
-import cups
-import win32print
-import win32ui
 
 so = platform.system()
+
+if so == "Windows":
+    import paramiko
+    import cups
+elif so == "Linux":
+    import win32print
+    import win32ui
 
 # Funciones de conexion remota
 def conectar_ssh():
@@ -186,5 +189,5 @@ def menu():
             print("Opción no válida. Intenta de nuevo.")
 
 # Ejecución del programa
-if __name__ == "__main__":
-    menu()
+# if __name__ == "__main__":
+menu()
