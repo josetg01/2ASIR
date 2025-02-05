@@ -92,11 +92,11 @@ def obtener_impresora_principal():
     elif so == "Linux" or so == "Darwin":
         # En Linux/Darwin usaremos lpstat para obtener la impresora predeterminada
         try:
-            result = subprocess.check_output(['lpstat', '-d'])
-            printer_name = result.decode('utf-8').split(":")[1].strip()
+            conn = cups.Connection()
+            printer_name = conn.getDefault()
             return printer_name
-        except subprocess.CalledProcessError:
-            print("No se pudo obtener la impresora predeterminada.")
+        except Exception as e:
+            print(f"Error al obtener la impresora predeterminada: {e}")
             return None
 
 #Lista los trabajos de impresión en cola.
@@ -113,10 +113,18 @@ def listar_trabajos_impresion():
         print("Trabajos de impresión en cola (Linux/Darwin):")
         # Usamos lpstat en sistemas Unix-like
         try:
-            result = subprocess.check_output(['lpstat', '-o'])
-            print(result.decode('utf-8'))
-        except subprocess.CalledProcessError:
-            print("No se pudieron listar los trabajos de impresión.")
+            conn = cups.Connection()
+            printer_name = obtener_impresora_principal()
+            print(f"Trabajos de impresión en la impresora: {printer_name}")
+            jobs = conn.getJobs()
+        
+            if not jobs:
+                print("No hay trabajos de impresión en la cola.")
+            else:
+                for job_id, job in jobs.items():
+                    print(f"Trabajo ID: {job_id}, Nombre de documento: {job['name']}, Estado: {job['state']}")
+    except Exception as e:
+        print(f"Error al listar los trabajos de impresión: {e}")
 
 #Envía un archivo a la impresora.
 def enviar_archivo_impresion():
@@ -135,8 +143,11 @@ def enviar_archivo_impresion():
     elif so == "Linux" or so == "Darwin":
         print(f"Enviando archivo a impresión...")
         try:
-            subprocess.run(['lp', file_path])
-            print("Archivo enviado a impresión.")
+        conn = cups.Connection()
+        printer_name = obtener_impresora_principal()
+        print(f"Enviando archivo a la impresora {printer_name}...")
+        conn.printFile(printer_name, file_path, "Trabajo de impresión", {})
+        print("Archivo enviado a impresión.")
         except Exception as e:
             print(f"Error al enviar el archivo a la impresora: {e}")
 
