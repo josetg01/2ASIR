@@ -48,10 +48,15 @@ def conectar_ssh(hostname, port, username, password):
         # Cerrar la conexión
         client.close()
 
-# Función para manejar la conexión remota en Windows (si es necesario)
+# Función para manejar la conexión remota en Windows
 def windows_remote():
-    print("Función para Windows aún no implementada.")
-    # Aquí podrías agregar algo específico para Windows si lo deseas
+    print("Conexión remota en Windows (MSTSC).")
+    hostname = input("Introduce la dirección IP del equipo al que te quieres conectar: ")
+    username = input("Introduce tu nombre de usuario para la conexión: ")
+    password = getpass.getpass("Introduce tu contraseña para la conexión: ")
+    mstsc_command = f"mstsc /v:{hostname} /u:{username}"
+    os.system(mstsc_command)
+    print("Conexión remota establecida via MSTSC.")
 
 def conexion_remota():
     if so == "Windows":
