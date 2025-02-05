@@ -1,5 +1,6 @@
 import paramiko
 import platform
+import getpass
 
 so = platform.system()
 
@@ -53,10 +54,16 @@ def conexion_remota():
   if so = "Windows":
     windows_remote()
   elif = "Linux":
-    hostname = input("")
+    hostname = input("Introduce la IP del equipo al que te conectas: ")
+    port = input("Escribe el puerto de SSH de dicho equipo: ")
+    username = input("Usuario con el que te conectas: ")
+    password = getpass.getpass("Contraseña con del usuario remoto: ")
     conectar_ssh(hostname, port, username, password)
+    
 
-# 
+# Funciones de gestion de impresion
+
+def gestion_impresion():
 
 def menu():
   print(1. Conectar a equipo remoto)
