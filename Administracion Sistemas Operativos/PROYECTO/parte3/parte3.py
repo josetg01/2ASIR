@@ -143,11 +143,11 @@ def enviar_archivo_impresion():
     elif so == "Linux" or so == "Darwin":
         print(f"Enviando archivo a impresión...")
         try:
-        conn = cups.Connection()
-        printer_name = obtener_impresora_principal()
-        print(f"Enviando archivo a la impresora {printer_name}...")
-        conn.printFile(printer_name, file_path, "Trabajo de impresión", {})
-        print("Archivo enviado a impresión.")
+            conn = cups.Connection()
+            printer_name = obtener_impresora_principal()
+            print(f"Enviando archivo a la impresora {printer_name}...")
+            conn.printFile(printer_name, file_path, "Trabajo de impresión", {})
+            print("Archivo enviado a impresión.")
         except Exception as e:
             print(f"Error al enviar el archivo a la impresora: {e}")
 
