@@ -123,8 +123,8 @@ def listar_trabajos_impresion():
             else:
                 for job_id, job in jobs.items():
                     print(f"Trabajo ID: {job_id}, Nombre de documento: {job['name']}, Estado: {job['state']}")
-    except Exception as e:
-        print(f"Error al listar los trabajos de impresión: {e}")
+        except Exception as e:
+            print(f"Error al listar los trabajos de impresión: {e}")
 
 #Envía un archivo a la impresora.
 def enviar_archivo_impresion():
