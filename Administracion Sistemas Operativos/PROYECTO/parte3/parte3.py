@@ -6,6 +6,10 @@ so = platform.system()
 
 # Funciones de conexion remota
 def conectar_ssh(hostname, port, username, password):
+    hostname = input("Introduce la IP del equipo al que te conectas: ")
+    port = input("Escribe el puerto de SSH de dicho equipo: ")
+    username = input("Usuario con el que te conectas: ")
+    password = getpass.getpass("Contraseña del usuario remoto: ")
     # Crear una instancia de un cliente SSH
     client = paramiko.SSHClient()
 
@@ -62,11 +66,7 @@ def conexion_remota():
     if so == "Windows":
         windows_remote()
     elif so == "Linux":
-        hostname = input("Introduce la IP del equipo al que te conectas: ")
-        port = input("Escribe el puerto de SSH de dicho equipo: ")
-        username = input("Usuario con el que te conectas: ")
-        password = getpass.getpass("Contraseña del usuario remoto: ")
-        conectar_ssh(hostname, port, username, password)
+        conectar_ssh()
 
 # Funciones de gestión de impresión
 def gestion_impresion():
