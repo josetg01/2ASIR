@@ -1,6 +1,6 @@
-import paramiko
 import platform
 import getpass
+import subprocess
 
 so = platform.system()
 
@@ -148,6 +148,12 @@ def cancelar_trabajo_impresion():
 
 # Menú principal
 def menu():
+    if so == "Linux":
+        import paramiko
+        import cups
+    elif so == "Windows":
+        import win32print
+        import win32ui
     while True:
         print("\nMenú de gestión:")
         print("1. Conexión remota")
