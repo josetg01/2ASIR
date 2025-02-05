@@ -49,9 +49,9 @@ def conectar_ssh(hostname, port, username, password):
     client.close()
 
 def conexion_remota():
-  if so = "Windows":
+  if so == "Windows":
     windows_remote()
-  elif = "Linux":
+  elif == "Linux":
     hostname = input("Introduce la IP del equipo al que te conectas: ")
     port = input("Escribe el puerto de SSH de dicho equipo: ")
     username = input("Usuario con el que te conectas: ")
