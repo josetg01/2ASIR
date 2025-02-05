@@ -5,7 +5,7 @@ import subprocess
 so = platform.system()
 
 # Funciones de conexion remota
-def conectar_ssh(hostname, port, username, password):
+def conectar_ssh():
     hostname = input("Introduce la IP del equipo al que te conectas: ")
     port = input("Escribe el puerto de SSH de dicho equipo: ")
     username = input("Usuario con el que te conectas: ")
