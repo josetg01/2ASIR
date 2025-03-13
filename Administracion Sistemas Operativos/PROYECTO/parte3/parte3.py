@@ -76,10 +76,7 @@ def conexion_remota():
     elif so == "Linux":
         conectar_ssh()
 
-# Funciones de gestión de impresión
-def gestion_impresion():
-    print("Función de gestión de impresión aún no implementada.")
-    # Aquí podrías agregar código para gestionar impresoras, si es necesario
+
 
 # Parte 2: Gestión de impresión
 
@@ -106,23 +103,31 @@ def listar_trabajos_impresion():
         # Usamos la API de Windows para listar trabajos
         printer_name = obtener_impresora_principal()
         print(f"Trabajos de impresión en la impresora: {printer_name}")
-        # Aquí se pueden obtener los trabajos usando win32print
-        # Pero en este caso, mostramos un mensaje de ejemplo
-        print("Listado de trabajos no implementado para Windows (requiere win32print).")
+        try:
+            printer = win32print.OpenPrinter(printer_name)
+            jobs = win32print.EnumJobs(printer, 0, -1, 1)
+            if not jobs:
+                print("No hay trabajos de impresión en la cola.")
+            else:
+                for job in jobs:
+                    print(f"Trabajo ID: {job['JobId']}, Nombre de documento: {job['pDocument']}, Estado: {job['Status']}")
+            win32print.ClosePrinter(printer)
+        except Exception as e:
+            print(f"Error al listar los trabajos de impresión: {e}")
     elif so == "Linux" or so == "Darwin":
         print("Trabajos de impresión en cola (Linux/Darwin):")
         # Usamos lpstat en sistemas Unix-like
         try:
-            conn = cups.Connection()
-            printer_name = obtener_impresora_principal()
-            print(f"Trabajos de impresión en la impresora: {printer_name}")
-            jobs = conn.getJobs()
-        
-            if not jobs:
+            result = subprocess.run(['lpq'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            if result.returncode != 0:
+                print(f"Error al listar los trabajos de impresión: {result.stderr}")
+                return
+
+            output = result.stdout.strip()
+            if not output:
                 print("No hay trabajos de impresión en la cola.")
             else:
-                for job_id, job in jobs.items():
-                    print(f"Trabajo ID: {job_id}, Nombre de documento: {job['name']}, Estado: {job['state']}")
+                print(output)
         except Exception as e:
             print(f"Error al listar los trabajos de impresión: {e}")
 
@@ -155,8 +160,15 @@ def enviar_archivo_impresion():
 def cancelar_trabajo_impresion():
     so = platform.system()
     if so == "Windows":
-        # Usar la API de Windows para cancelar trabajos (requiere win32print)
-        print("Cancelar trabajos en Windows no implementado.")
+        printer_name = obtener_impresora_principal()
+        job_id = input("Introduce el ID del trabajo de impresión a cancelar: ")
+        try:
+            printer = win32print.OpenPrinter(printer_name)
+            win32print.SetJob(printer, int(job_id), 0, None, win32print.JOB_CONTROL_DELETE)
+            print(f"Trabajo de impresión {job_id} cancelado.")
+            win32print.ClosePrinter(printer)
+        except Exception as e:
+            print(f"Error al cancelar el trabajo de impresión: {e}")
     elif so == "Linux" or so == "Darwin":
         job_id = input("Introduce el ID del trabajo de impresión a cancelar: ")
         try:
