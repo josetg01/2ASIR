@@ -28,7 +28,7 @@ def check_and_install(library):
 if so == "Linux":
     required_libraries = ['paramiko', 'pycups']
 elif so == "Windows":
-    required_libraries = ['pywin32']
+    required_libraries = ['pywin32', 'paramiko']
 
 # Recorremos la lista de librerías
 for lib in required_libraries:
